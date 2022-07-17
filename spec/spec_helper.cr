@@ -17,6 +17,7 @@ macro pair_only
 end
 
 require "spec"
+Spec.override_default_formatter(Spec::VerboseFormatter.new.as(Spec::Formatter))
 require "factory"
 require "./config"
 require "./models"

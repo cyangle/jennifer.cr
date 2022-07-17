@@ -2,7 +2,6 @@ GC.disable
 Signal::CHLD.reset
 Crystal::Signal.start_loop
 require "./spec/spec_helper.cr"
-Spec.override_default_formatter(Spec::VerboseFormatter.new.as(Spec::Formatter))
 require "./spec/jennifer_spec.cr"
 require "./spec/validations/absence_spec.cr"
 require "./spec/validations/length_spec.cr"
