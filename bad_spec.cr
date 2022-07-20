@@ -1,11 +1,7 @@
 require "./spec/model/enum_converter_spec.cr"
-require "./spec/model/authentication_spec.cr"
-require "./spec/relation/polymorphic_belongs_to_spec.cr"
-require "./spec/relation/polymorphic_has_one_spec.cr"
-require "./spec/relation/polymorphic_has_many_spec.cr"
+# Below spec is very slow
+# https://github.com/crystal-lang/crystal/issues/12296
 require "./spec/adapter/base_sql_generator_spec.cr"
 require "./spec/query_builder/query_spec.cr"
 require "./spec/model/relation_definition_spec.cr"
 require "./spec/query_builder/ordering_spec.cr"
-require "./spec/query_builder/joining_spec.cr"
-require "./spec/query_builder/model_query_spec.cr"

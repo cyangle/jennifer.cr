@@ -89,3 +89,12 @@ require "./spec/model/mapping_spec.cr"
 require "./spec/model/time_zone_converter_spec.cr"
 require "./spec/model/coercer_spec.cr"
 require "./spec/model/callback_spec.cr"
+require "./spec/query_builder/joining_spec.cr"
+require "./spec/query_builder/model_query_spec.cr"
+require "./spec/relation/polymorphic_has_many_spec.cr"
+require "./spec/relation/polymorphic_has_one_spec.cr"
+require "./spec/relation/polymorphic_belongs_to_spec.cr"
+
+
+# Below spec is too slow to run
+# require "./spec/model/authentication_spec.cr"
