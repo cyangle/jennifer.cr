@@ -1,4 +1,3 @@
-require "./spec/model/enum_converter_spec.cr"
 # https://github.com/crystal-lang/crystal/issues/12296
 require "./spec/adapter/base_sql_generator_spec.cr"
 require "./spec/query_builder/query_spec.cr"

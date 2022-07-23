@@ -94,6 +94,7 @@ require "./spec/query_builder/model_query_spec.cr"
 require "./spec/relation/polymorphic_has_many_spec.cr"
 require "./spec/relation/polymorphic_has_one_spec.cr"
 require "./spec/relation/polymorphic_belongs_to_spec.cr"
+require "./spec/model/enum_converter_spec.cr"
 
 
 # Below spec is too slow to run
