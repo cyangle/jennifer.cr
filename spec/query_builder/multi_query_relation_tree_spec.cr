@@ -1,3 +1,4 @@
+require "../spec_helper"
 describe Jennifer::QueryBuilder::MultiQueryRelationTree do
   query = Contact.all
   builder = ->{ Jennifer::QueryBuilder::MultiQueryRelationTree.new(Contact) }

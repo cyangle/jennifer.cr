@@ -1,4 +1,4 @@
-# require "./spec_helper"
+require "./spec_helper"
 
 def prepare_docker_config
   Jennifer::Config.configure do |conf|

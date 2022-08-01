@@ -1,3 +1,4 @@
+require "../spec_helper"
 describe Jennifer::QueryBuilder::NestedRelationTree do
   builder = ->{ Jennifer::QueryBuilder::NestedRelationTree.new(Contact) }
 

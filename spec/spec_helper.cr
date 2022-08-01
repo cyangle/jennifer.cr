@@ -1,3 +1,8 @@
+{% if flag?(:interpreted) %}
+  GC.disable
+  Signal::CHLD.reset
+  Crystal::Signal.start_loop
+{% end %}
 macro postgres_only
   {% if env("DB") == "postgres" || env("DB") == nil %}
     {{yield}}
