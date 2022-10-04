@@ -61,7 +61,7 @@ def set_default_configuration
 
   Jennifer::Config.configure do |conf|
     conf.read(File.join(__DIR__, "../scripts/database.yml"), Spec.adapter)
-    conf.logger = Spec.logger
+    conf.logger = ::Log.for("db", :debug)
     # conf.logger.level = :debug
     conf.user = ENV["DB_USER"] if ENV["DB_USER"]?
     conf.password = ENV["DB_PASSWORD"] if ENV["DB_PASSWORD"]?
@@ -69,7 +69,8 @@ def set_default_configuration
     conf.local_time_zone_name = "Europe/Kiev"
   end
 
-  Log.setup "db", :debug, Spec.logger_backend
+  Log.setup(:debug)
+  # Log.setup "db", :debug, Spec.logger_backend
   # Log.setup "db", :debug, Log::IOBackend.new(formatter: Jennifer::DBFormat)
 end
 
