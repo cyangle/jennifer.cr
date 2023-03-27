@@ -152,9 +152,9 @@ module Jennifer
       #   user.last_name = "Doe"
       # end
       # ```
-      def self.create(values : Hash | NamedTuple, &block)
+      def self.create(values : Hash | NamedTuple, &block : (self) -> T) : self forall T
         o = new(values)
-        yield o
+        block.call(o)
         o.save
         o
       end
@@ -179,9 +179,9 @@ module Jennifer
       #   user.last_name = "Doe"
       # end
       # ```
-      def self.create(&block)
+      def self.create(&block : (self) -> T) : self forall T
         o = new({} of String => DBAny)
-        yield o
+        block.call(o)
         o.save
         o
       end
@@ -206,9 +206,9 @@ module Jennifer
       #   user.last_name = "Doe"
       # end
       # ```
-      def self.create(**values, &block)
+      def self.create(**values, &block : (self) -> T) : self forall T
         o = new(values)
-        yield o
+        block.call(o)
         o.save
         o
       end
@@ -234,9 +234,9 @@ module Jennifer
       #   user.last_name = "Doe"
       # end
       # ```
-      def self.create!(values : Hash | NamedTuple, &block)
+      def self.create!(values : Hash | NamedTuple, &block : (self) -> T) : self forall T
         o = new(values)
-        yield o
+        block.call(o)
         o.save!
         o
       end
@@ -261,9 +261,9 @@ module Jennifer
       #   user.last_name = "Doe"
       # end
       # ```
-      def self.create!(&block)
+      def self.create!(&block : (self) -> T) : self forall T
         o = new({} of Symbol => DBAny)
-        yield o
+        block.call(o)
         o.save!
         o
       end
@@ -288,9 +288,9 @@ module Jennifer
       #   user.last_name = "Doe"
       # end
       # ```
-      def self.create!(**values, &block)
+      def self.create!(**values, &block : (self) -> T) : self forall T
         o = new(values)
-        yield o
+        block.call(o)
         o.save!
         o
       end
@@ -540,10 +540,10 @@ module Jennifer
       end
 
       # Starts a transaction and locks current object.
-      def with_lock(type : String | Bool = true)
+      def with_lock(type : String | Bool = true, &block : (DB::Transaction) -> T) : T? forall T
         self.class.transaction do |t|
           self.lock!(type)
-          yield(t)
+          block.call(t)
         end
       end
 
@@ -593,8 +593,8 @@ module Jennifer
       end
 
       # Performs table lock for current model's table.
-      def self.with_table_lock(type : String | Symbol, &block)
-        write_adapter.with_table_lock(table_name, type.to_s) { |t| yield t }
+      def self.with_table_lock(type : String | Symbol, &block : DB::Transaction -> Void)
+        write_adapter.with_table_lock(table_name, type.to_s) { |t| block.call(t) }
       end
 
       # Returns record by given primary field or `nil` otherwise.

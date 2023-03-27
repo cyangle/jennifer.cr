@@ -349,12 +349,12 @@ module Jennifer
       end
 
       # Yields each result set object to a block.
-      def each_result_set(&block)
+      def each_result_set(&block : (DB::ResultSet) -> _)
         return if do_nothing?
 
         read_adapter.select(self) do |rs|
           begin
-            rs.each { yield rs }
+            rs.each { block.call(rs) }
           rescue e : Exception
             rs.read_to_end
             raise e

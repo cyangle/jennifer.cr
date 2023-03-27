@@ -310,9 +310,15 @@ module Jennifer
       #   Post.create
       # end
       # ```
-      def self.transaction
+      def self.transaction(&block : (DB::Connection) -> T) : T? forall T
         write_adapter.transaction do |t|
-          yield(t)
+          block.call(t)
+        end
+      end
+
+      def self.transaction(&block : (DB::Transaction) -> T) : T? forall T
+        write_adapter.transaction do |t|
+          block.call(t)
         end
       end
 

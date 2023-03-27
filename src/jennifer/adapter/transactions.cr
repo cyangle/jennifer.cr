@@ -6,19 +6,19 @@ module Jennifer
       @locks = {} of UInt64 => TransactionObserver
 
       # Yields current connection or checkout a new one.
-      def with_connection(&block)
+      def with_connection(&block : (DB::Connection) -> T) : T forall T
         if under_transaction?
-          yield @locks[fiber_id].connection
+          block.call(@locks[fiber_id].connection)
         else
-          with_manual_connection { |conn| yield conn }
+          with_manual_connection { |conn| block.call(conn) }
         end
       end
 
       # Yields new checkout connection.
-      def with_manual_connection(&block)
+      def with_manual_connection(&block : (DB::Connection) -> T) : T forall T
         db.retry do
           db.using_connection do |conn|
-            yield conn
+            block.call(conn)
           end
         end
       end
@@ -34,15 +34,15 @@ module Jennifer
       end
 
       # Starts a transaction and yields it to the given block.
-      def transaction(&block)
+      def transaction(&block : (DB::Transaction) -> T) : T? forall T
         previous_transaction = current_transaction
-        res = nil
+        res : T? = nil
         with_transactionable do |conn|
           conn.transaction do |tx|
             lock_connection(tx)
             begin
               log_query("START") { }
-              res = yield(tx)
+              res = block.call(tx)
               log_query("COMMIT") { }
             rescue e
               @locks[fiber_id].rollback
@@ -102,12 +102,12 @@ module Jennifer
       end
 
       # Yields current transaction or starts a new one.
-      private def with_transactionable(&block)
+      private def with_transactionable(&block : (DB::Transaction | DB::Connection) -> T) : T forall T
         if under_transaction?
-          yield @locks[fiber_id].transaction
+          block.call(@locks[fiber_id].transaction)
         else
           with_manual_connection do |conn|
-            yield conn
+            block.call(conn)
           end || false
         end
       end

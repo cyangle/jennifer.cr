@@ -170,11 +170,11 @@ module Jennifer
         MESSAGE
       end
 
-      private def self.optional_transaction(migration)
+      private def self.optional_transaction(migration, &block)
         if migration.class.with_transaction?
-          Model::Base.transaction { yield }
+          Model::Base.transaction { block.call }
         else
-          yield
+          block.call
         end
       end
     end

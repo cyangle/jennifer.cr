@@ -80,8 +80,8 @@ module Jennifer
       # end
       # record.id # => Int64
       # ```
-      def find_or_create_by(attributes : Hash(String | Symbol, _), &block) : T
-        find_by(attributes) || T.create(attributes) { |record| yield record }
+      def find_or_create_by(attributes : Hash(String | Symbol, _), &block : (T) -> U) : T forall U
+        find_by(attributes) || T.create(attributes) { |record| block.call(record) }
       end
 
       # Finds the first record with the given attributes, or creates a record with the attributes if one is not found:
@@ -90,8 +90,8 @@ module Jennifer
       end
 
       # Similar to `#find_or_create_by, but calls `.create!` instead of `.create`.
-      def find_or_create_by!(attributes : Hash(String | Symbol, _), &block) : T
-        find_by(attributes) || T.create!(attributes) { |record| yield record }
+      def find_or_create_by!(attributes : Hash(String | Symbol, _), &block : (T) -> U) : T forall U
+        find_by(attributes) || T.create!(attributes) { |record| block.call(record) }
       end
 
       # Finds the first record with the given attributes, or creates a record with the attributes if one is not found:
@@ -108,8 +108,8 @@ module Jennifer
       # end
       # record.id # => Int64
       # ```
-      def find_or_initialize_by(attributes : Hash(String | Symbol, _), &block) : T
-        find_by(attributes) || T.new(attributes).tap { |record| yield record }
+      def find_or_initialize_by(attributes : Hash(String | Symbol, _), &block : (T) -> U) : T forall U
+        find_by(attributes) || T.new(attributes).tap { |record| block.call(record) }
       end
 
       # Finds the first record with the given attributes, or creates a record with the attributes if one is not found:

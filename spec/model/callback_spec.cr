@@ -172,12 +172,12 @@ describe Jennifer::Model::Callback do
             fb = nil
             FacebookProfile.transaction do
               fb = Factory.create_facebook_profile(name: "name")
-              fb.commit_callback_called.should be_false
-              fb.fb_commit_callback_called.should be_false
+              fb.try &.commit_callback_called.should be_false
+              fb.try &.fb_commit_callback_called.should be_false
             end
-            fb = fb.not_nil!
-            fb.commit_callback_called.should be_true
-            fb.fb_commit_callback_called.should be_true
+            fb2 = fb.not_nil!
+            fb2.commit_callback_called.should be_true
+            fb2.fb_commit_callback_called.should be_true
           end
         end
       end
@@ -187,7 +187,7 @@ describe Jennifer::Model::Callback do
           country = nil
           CountryWithTransactionCallbacks.transaction do
             country = CountryWithTransactionCallbacks.create(name: "name")
-            country.create_commit_callback.should be_false
+            country.try &.create_commit_callback.should be_false
           end
           country.not_nil!.create_commit_callback.should be_true
         end
@@ -198,7 +198,7 @@ describe Jennifer::Model::Callback do
           country = nil
           CountryWithTransactionCallbacks.transaction do
             country = CountryWithTransactionCallbacks.create(name: "name")
-            country.create_commit_callback.should be_false
+            country.try &.create_commit_callback.should be_false
             raise DB::Rollback.new
           end
           country.not_nil!.create_commit_callback.should be_false
@@ -213,7 +213,7 @@ describe Jennifer::Model::Callback do
             country = nil
             CountryWithTransactionCallbacks.transaction do
               country = CountryWithTransactionCallbacks.create(name: "name")
-              country.save_commit_callback.should be_false
+              country.try &.save_commit_callback.should be_false
             end
             country.not_nil!.save_commit_callback.should be_true
           end

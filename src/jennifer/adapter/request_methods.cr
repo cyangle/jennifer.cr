@@ -61,10 +61,10 @@ module Jennifer
         result
       end
 
-      def select(q)
+      def select(q, &block : (DB::ResultSet) -> T) : T forall T
         body = sql_generator.select(q)
         args = q.sql_args
-        query(*parse_query(body, args)) { |rs| yield rs }
+        query(*parse_query(body, args)) { |rs| block.call(rs) }
       end
 
       private def add_field_assign_arguments(container : Array, value : DBAny)

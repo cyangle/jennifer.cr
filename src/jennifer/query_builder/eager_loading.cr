@@ -115,7 +115,7 @@ module Jennifer
       end
 
       # Loads relations added by `preload` method; makes one separate request per each relation.
-      private def add_preloaded(collection)
+      private def add_preloaded(collection : Array)
         return collection if collection.empty? || !@include_relations
         multi_query_relation_tree.preload(collection)
         collection

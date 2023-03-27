@@ -207,8 +207,8 @@ module Jennifer
     end
 
     # Yields default configuration instance to block and validates it.
-    def self.configure(&block)
-      yield instance
+    def self.configure(&block : (self)->)
+      block.call(instance)
       instance.validate_config
     end
 
@@ -222,8 +222,8 @@ module Jennifer
       config.read(*args, **opts)
     end
 
-    def self.read(*args, **opts)
-      config.read(*args, **opts) { |document| yield document }
+    def self.read(*args, **opts, &block : (YAML::Any) -> YAML::Any)
+      config.read(*args, **opts) { |document| block.call(document) }
     end
 
     # Returns maximum size of the pool.
@@ -291,8 +291,8 @@ module Jennifer
     # Reads configurations from the file with given *path*.
     #
     # It is considered that all configuration properties are located at the root level.
-    def read(path : String)
-      source = yield YAML.parse(File.read(path))
+    def read(path : String, &block : (YAML::Any)->YAML::Any)
+      source = block.call(YAML.parse(File.read(path)))
       from_yaml(source)
     end
 

@@ -199,7 +199,7 @@ module Jennifer
       def with_table_lock(table : String, type : String = "default", &block : DB::Transaction -> Void)
         transaction do |t|
           exec "LOCK TABLE #{table} IN #{TABLE_LOCK_TYPES[type]} MODE"
-          yield t
+          block.call(t)
         end
       rescue e : KeyError
         raise BaseException.new("Unknown table lock type '#{type}'.")

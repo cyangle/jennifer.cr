@@ -1,7 +1,7 @@
 module DB
   abstract class Statement
-    protected def around_query_or_exec(args : Enumerable)
-      yield
+    protected def around_query_or_exec(args : Enumerable, &block : -> T) : T forall T
+      block.call
     end
   end
 
