@@ -20,7 +20,7 @@ require "../../src/jennifer/generators/*"
 require "../../src/jennifer/adapter/db_colorized_formatter"
 require "sam"
 
-class ::Jennifer::Generators::Base
+class Jennifer::Generators::Base
   def puts(_value); end
 end
 
