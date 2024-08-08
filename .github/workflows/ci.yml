@@ -106,6 +106,7 @@ jobs:
             DB: postgres
           - crystal_version: 1.13.1
             DB: mysql
+            os: ubuntu-24.04
             integration: true
             linter: true
           - crystal_version: 1.13.1

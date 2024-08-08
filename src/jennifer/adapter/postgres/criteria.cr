@@ -1,4 +1,4 @@
-class Jennifer::QueryBuilder::Criteria
+class ::Jennifer::QueryBuilder::Criteria
   {% for op in [:overlap, :contain, :contained] %}
     # Presents {{op}} operator.
     #

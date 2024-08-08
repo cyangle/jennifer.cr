@@ -23,11 +23,11 @@ require "./support/*"
 require "../scripts/migrations/20170119011451314_create_contacts"
 require "../scripts/migrations/20180909200027509_create_notes"
 
-class Jennifer::Adapter::ICommandShell
+class ::Jennifer::Adapter::ICommandShell
   class_property? stub = false
 end
 
-class Jennifer::Adapter::Bash < Jennifer::Adapter::ICommandShell
+class ::Jennifer::Adapter::Bash < Jennifer::Adapter::ICommandShell
   private def invoke(string, options)
     if Jennifer::Adapter::ICommandShell.stub?
       {result: 0, output: [string, options]}
@@ -37,7 +37,7 @@ class Jennifer::Adapter::Bash < Jennifer::Adapter::ICommandShell
   end
 end
 
-class Jennifer::Adapter::Docker < Jennifer::Adapter::ICommandShell
+class ::Jennifer::Adapter::Docker < Jennifer::Adapter::ICommandShell
   private def invoke(string, options)
     if Jennifer::Adapter::ICommandShell.stub?
       {result: 0, output: [string, options]}
