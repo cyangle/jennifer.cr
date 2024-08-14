@@ -23,12 +23,12 @@ jobs:
 
     steps:
       - name: Install Crystal
-        uses: oprypin/install-crystal@v1
+        uses: crystal-lang/install-crystal@v1
         with:
           crystal: 1.8.2
 
       - name: Donwload sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Check formatting
         if: ${{ matrix.linter }}
@@ -158,7 +158,7 @@ jobs:
           crystal: ${{matrix.crystal_version}}
 
       - name: Donwload sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
