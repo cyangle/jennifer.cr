@@ -132,6 +132,13 @@ jobs:
             os: ubuntu-24.04
             pair: true
             other: PAIR_DB_USER=dbuser PAIR_DB_PASSWORD=dbpassword
+          - crystal_version: nightly
+            DB: mysql
+            os: ubuntu-24.04
+          - crystal_version: nightly
+            DB: postgres
+            pg_version: '16'
+            os: ubuntu-24.04
 
     runs-on: ${{ matrix.os || 'ubuntu-22.04' }}
 
@@ -146,7 +153,7 @@ jobs:
         run: export ${{ matrix.other }}
 
       - name: Install Crystal
-        uses: oprypin/install-crystal@v1
+        uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{matrix.crystal_version}}
 
