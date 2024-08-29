@@ -106,29 +106,29 @@ jobs:
             DB: mysql
           - crystal_version: 1.12.2
             DB: postgres
-          - crystal_version: 1.13.1
+          - crystal_version: 1.13.2
             DB: mysql
             os: ubuntu-24.04
             integration: true
             linter: true
-          - crystal_version: 1.13.1
+          - crystal_version: 1.13.2
             DB: postgres
             pg_version: '16'
             os: ubuntu-24.04
             integration: true
             linter: true
-          - crystal_version: 1.13.1
+          - crystal_version: 1.13.2
             DB: postgres
             pg_version: '16'
             os: ubuntu-24.04
             other: MT=1
-          - crystal_version: 1.13.1
+          - crystal_version: 1.13.2
             DB: postgres
             pg_version: '16'
             os: ubuntu-24.04
             pair: true
             other: PAIR_DB_USER=root PAIR_DB_PASSWORD=
-          - crystal_version: 1.13.1
+          - crystal_version: 1.13.2
             DB: mysql
             pg_version: '16'
             os: ubuntu-24.04
